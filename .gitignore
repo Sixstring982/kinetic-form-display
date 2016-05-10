@@ -1,0 +1,9 @@
+# emacs stuff
+*~
+[#]*[#]
+
+# vscode stuff
+.vscode
+
+# node stuff
+node_modules/
