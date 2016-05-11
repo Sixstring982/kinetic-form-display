@@ -1,0 +1,14 @@
+h1 {
+  color: black;
+  font-family: 'Lobster', cursive;
+  text-shadow: 2px 2px white;
+}
+
+h5 {
+  font-family: 'Lobster', cursive;
+}
+
+body {
+  background-color: #00bcd4;
+  font-family: 'Helvetica', sans-serif;
+}

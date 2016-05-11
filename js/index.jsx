@@ -3,13 +3,25 @@ import { createStore } from 'redux';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import Reducers from './reducers/';
+import App from './components/App.jsx';
+import * as Action from './actions';
 
 const store = createStore(Reducers);
 
 render(
   <Provider store={store}>
-    <div className="card gray">
-    </div>
+    <App />
   </Provider>,
   document.getElementById('root')
 );
+
+setInterval(() => {
+  fetch('/tweets.txt')
+    .then(r => r.text())
+    .then(r => {
+      store.dispatch(
+        Action.fetchLastTweet(r)
+      );
+    });
+  console.log('fetching...');
+}, 3000);
