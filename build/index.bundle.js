@@ -86,7 +86,6 @@
 	  }).then(function (r) {
 	    store.dispatch(Action.fetchLastTweet(r));
 	  });
-	  console.log('fetching...');
 	}, 3000);
 
 /***/ },

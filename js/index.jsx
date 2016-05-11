@@ -23,5 +23,4 @@ setInterval(() => {
         Action.fetchLastTweet(r)
       );
     });
-  console.log('fetching...');
 }, 3000);
