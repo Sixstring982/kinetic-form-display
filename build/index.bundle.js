@@ -81,11 +81,19 @@
 	), document.getElementById('root'));
 	
 	setInterval(function () {
-	  fetch('/tweets.txt').then(function (r) {
-	    return r.text();
-	  }).then(function (r) {
-	    store.dispatch(Action.fetchLastTweet(r));
-	  });
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('GET', '/tweets.txt');
+	  xhr.responseType = 'text';
+	
+	  xhr.onload = function () {
+	    store.dispatch(Action.fetchLastTweet(xhr.response));
+	  };
+	
+	  xhr.onerror = function () {
+	    console.log('count\'t fetch resource!');
+	  };
+	
+	  xhr.send();
 	}, 3000);
 
 /***/ },
@@ -21914,12 +21922,15 @@
 	};
 	
 	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent) {
-	    var keys = Object.getOwnPropertyNames(sourceComponent);
-	    for (var i = 0; i < keys.length; ++i) {
-	        if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]]) {
-	            try {
-	                targetComponent[keys[i]] = sourceComponent[keys[i]];
-	            } catch (error) {}
+	    if (typeof sourceComponent !== 'string') {
+	        // don't hoist over string (html) components
+	        var keys = Object.getOwnPropertyNames(sourceComponent);
+	        for (var i = 0; i < keys.length; ++i) {
+	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]]) {
+	                try {
+	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
+	                } catch (error) {}
+	            }
 	        }
 	    }
 	

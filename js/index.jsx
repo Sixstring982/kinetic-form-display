@@ -16,11 +16,17 @@ render(
 );
 
 setInterval(() => {
-  fetch('/tweets.txt')
-    .then(r => r.text())
-    .then(r => {
-      store.dispatch(
-        Action.fetchLastTweet(r)
-      );
-    });
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', '/tweets.txt');
+  xhr.responseType = 'text';
+
+  xhr.onload = () => {
+    store.dispatch(Action.fetchLastTweet(xhr.response));
+  };
+
+  xhr.onerror = () => {
+    console.log('count\'t fetch resource!');
+  };
+
+  xhr.send();
 }, 3000);
